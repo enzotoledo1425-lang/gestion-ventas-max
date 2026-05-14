@@ -7,79 +7,284 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg-principal: #0f172a; --bg-tarjeta: #1e293b; --texto-titulos: #f8fafc;
-            --texto-secundario: #94a3b8; --verde-exito: #22c55e; --rojo: #ef4444; --azul: #3b82f6;
+            --bg-principal: #0f172a;
+            --bg-tarjeta: #1e293b;
+            --texto-titulos: #ffffff;
+            --texto-secundario: #94a3b8;
+            --verde-exito: #10b981;
+            --rojo: #f43f5e;
+            --azul: #3b82f6;
+            --borde: #334155;
+            --accent: #8b5cf6;
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-principal); color: var(--texto-titulos); margin: 0; padding: 20px; text-align: center; }
-        .contenedor { max-width: 500px; margin: 0 auto; }
-        header { margin-bottom: 30px; }
-        h1 { font-size: 3rem; margin: 0; letter-spacing: 5px; color: var(--texto-titulos); }
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .opcion-btn { background: var(--bg-tarjeta); border: 1px solid #334155; border-radius: 12px; padding: 20px 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 10px; color: inherit; text-decoration: none; }
-        .btn-full { grid-column: span 2; padding: 15px; flex-direction: row; justify-content: center; }
-        .seccion { background: var(--bg-tarjeta); padding: 20px; border-radius: 15px; margin-top: 20px; display: none; text-align: left; border: 1px solid var(--azul); }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 8px; box-sizing: border-box; }
-        .btn-accion { width: 100%; padding: 12px; background: var(--verde-exito); border: none; color: white; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; }
-        th, td { padding: 8px; border-bottom: 1px solid #334155; text-align: left; }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: var(--bg-principal); 
+            color: var(--texto-titulos); 
+            margin: 0; 
+            padding: 20px; 
+            display: flex;
+            justify-content: center;
+        }
+
+        .contenedor { 
+            width: 100%;
+            max-width: 600px; 
+        }
+
+        header { 
+            text-align: center;
+            margin-bottom: 40px; 
+            padding-top: 20px;
+        }
+
+        header p {
+            color: var(--azul);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            margin-bottom: 5px;
+        }
+
+        h1 { 
+            font-size: 3.5rem; 
+            margin: 0; 
+            font-weight: 900;
+            background: linear-gradient(to bottom, #fff, #64748b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Grid de Menú */
+        .menu-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 12px; 
+            margin-bottom: 25px; 
+        }
+
+        .opcion-btn { 
+            background: var(--bg-tarjeta); 
+            border: 1px solid var(--borde); 
+            border-radius: 16px; 
+            padding: 20px 15px; 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 12px; 
+            color: var(--texto-titulos); 
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .opcion-btn:hover {
+            border-color: var(--azul);
+            transform: translateY(-2px);
+            background: #243147;
+        }
+
+        .opcion-btn i { font-size: 1.5rem; }
+        .opcion-btn span { font-size: 0.9rem; font-weight: 500; }
+
+        .btn-full { 
+            grid-column: span 2; 
+            flex-direction: row; 
+            padding: 15px; 
+            justify-content: center; 
+        }
+
+        /* Secciones Estilizadas */
+        .seccion { 
+            background: var(--bg-tarjeta); 
+            padding: 25px; 
+            border-radius: 20px; 
+            margin-top: 20px; 
+            display: none; 
+            border: 1px solid var(--borde);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h3 { margin-top: 0; margin-bottom: 20px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+
+        /* Formulario */
+        label { display: block; font-size: 0.8rem; color: var(--texto-secundario); margin-bottom: 5px; margin-left: 5px; }
+        input, select { 
+            width: 100%; 
+            padding: 14px; 
+            margin-bottom: 15px; 
+            background: #0f172a; 
+            color: white; 
+            border: 1px solid var(--borde); 
+            border-radius: 12px; 
+            box-sizing: border-box; 
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input:focus, select:focus { border-color: var(--azul); }
+
+        .btn-accion { 
+            width: 100%; 
+            padding: 15px; 
+            background: var(--azul); 
+            border: none; 
+            color: white; 
+            font-weight: bold; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-size: 1rem;
+            transition: opacity 0.2s;
+        }
+
+        .btn-accion:active { transform: scale(0.98); }
+
+        /* Tablas */
+        .tabla-scroll { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { color: var(--texto-secundario); font-weight: 500; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px; padding: 12px 8px; border-bottom: 1px solid var(--borde); text-align: left; }
+        td { padding: 12px 8px; border-bottom: 1px solid #2d3a4f; font-size: 0.9rem; }
+        
+        /* Badge Ganancias */
+        #total_g { 
+            font-size: 3rem; 
+            margin: 10px 0; 
+            color: var(--verde-exito); 
+            text-align: center;
+        }
+
+        .volver-btn {
+            background: transparent;
+            border: none;
+            color: var(--texto-secundario);
+            cursor: pointer;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="contenedor">
         <header>
-            <p style="color: var(--texto-secundario); font-size: 0.8rem; margin-bottom: 5px;">PANEL DE CONTROL GENERAL</p>
+            <p>Admin Dashboard</p>
             <h1>MAX</h1>
         </header>
 
-        <nav class="menu-grid">
-            <div class="opcion-btn" onclick="mostrar('sec-venta')"><i class="fas fa-box" style="color: #fbbf24;"></i><span>Registrar Venta</span></div>
-            <div class="opcion-btn" onclick="mostrar('sec-clientes')"><i class="fas fa-users" style="color: #60a5fa;"></i><span>Clientes</span></div>
-            <div class="opcion-btn" onclick="mostrar('sec-deudores')"><i class="fas fa-exclamation-triangle" style="color: var(--rojo);"></i><span>Deudores</span></div>
-            <div class="opcion-btn" onclick="mostrar('sec-ganancias')"><i class="fas fa-chart-line" style="color: var(--verde-exito);"></i><span>Mis Ganancias</span></div>
-            <div class="opcion-btn btn-full" onclick="mostrar('sec-vendedores')"><i class="fas fa-chart-pie" style="margin-right:10px; color:#a78bfa;"></i> GANANCIAS POR VENDEDOR</div>
-            <div class="opcion-btn btn-full" onclick="mostrar('sec-roles')"><i class="fas fa-user-shield" style="margin-right:10px; color:#94a3b8;"></i> ADMINISTRAR TRABAJADORES</div>
-            <div class="opcion-btn btn-full" onclick="mostrar('sec-historial')"><i class="fas fa-history" style="margin-right:10px;"></i> VER HISTORIAL COMPLETO</div>
+        <nav class="menu-grid" id="menu-principal">
+            <div class="opcion-btn" onclick="mostrar('sec-venta')"><i class="fas fa-plus-circle" style="color: #fbbf24;"></i><span>Venta</span></div>
+            <div class="opcion-btn" onclick="mostrar('sec-clientes')"><i class="fas fa-user-plus" style="color: #60a5fa;"></i><span>Clientes</span></div>
+            <div class="opcion-btn" onclick="mostrar('sec-deudores')"><i class="fas fa-hand-holding-usd" style="color: var(--rojo);"></i><span>Deudores</span></div>
+            <div class="opcion-btn" onclick="mostrar('sec-ganancias')"><i class="fas fa-wallet" style="color: var(--verde-exito);"></i><span>Balance</span></div>
+            
+            <div class="opcion-btn btn-full" onclick="mostrar('sec-vendedores')">
+                <i class="fas fa-chart-bar" style="margin-right:10px; color:#a78bfa;"></i> 
+                <span>RENDIMIENTO VENDEDORES</span>
+            </div>
+            <div class="opcion-btn btn-full" onclick="mostrar('sec-roles')">
+                <i class="fas fa-user-cog" style="margin-right:10px; color:#94a3b8;"></i> 
+                <span>GESTIÓN DE PERSONAL</span>
+            </div>
+            <div class="opcion-btn btn-full" onclick="mostrar('sec-historial')">
+                <i class="fas fa-list-ul" style="margin-right:10px;"></i> 
+                <span>HISTORIAL DE ACTIVIDAD</span>
+            </div>
         </nav>
 
-        <!-- SECCIONES (El resto del código se mantiene igual para no perder funcionalidad) -->
+        <!-- SECCIONES -->
+        
+        <!-- TRABAJADORES -->
         <div id="sec-roles" class="seccion">
+            <button class="volver-btn" onclick="cerrar()"><i class="fas fa-arrow-left"></i> Volver</button>
             <h3>🛡️ Nuevo Trabajador</h3>
-            <input type="text" id="v_nom" placeholder="Nombre">
-            <input type="text" id="v_ape" placeholder="Apellido">
-            <button class="btn-accion" onclick="addVendedor()">REGISTRAR</button>
+            <label>Nombre</label>
+            <input type="text" id="v_nom" placeholder="Ej: Juan">
+            <label>Apellido</label>
+            <input type="text" id="v_ape" placeholder="Ej: Pérez">
+            <button class="btn-accion" style="background: var(--accent)" onclick="addVendedor()">REGISTRAR PERSONAL</button>
         </div>
 
+        <!-- CLIENTES -->
         <div id="sec-clientes" class="seccion">
-            <h3>➕ Nuevo Cliente</h3>
+            <button class="volver-btn" onclick="cerrar()"><i class="fas fa-arrow-left"></i> Volver</button>
+            <h3>👤 Registro de Cliente</h3>
             <input type="text" id="c_nom" placeholder="Nombre">
             <input type="text" id="c_ape" placeholder="Apellido">
-            <button class="btn-accion" onclick="addCli()">GUARDAR</button>
+            <button class="btn-accion" onclick="addCli()">GUARDAR CLIENTE</button>
         </div>
 
+        <!-- VENTA -->
         <div id="sec-venta" class="seccion">
-            <h3>💰 Nueva Venta</h3>
+            <button class="volver-btn" onclick="cerrar()"><i class="fas fa-arrow-left"></i> Volver</button>
+            <h3>💰 Nueva Transacción</h3>
+            <label>Vendedor</label>
             <select id="selVendedor"></select>
+            <label>Cliente</label>
             <select id="selCli"></select>
-            <input type="number" id="monto" placeholder="Monto $">
-            <select id="estado"><option value="Pagado">Pagado</option><option value="Deuda">Deuda</option></select>
-            <button class="btn-accion" onclick="addVenta()">REGISTRAR VENTA</button>
+            <label>Monto de la operación</label>
+            <input type="number" id="monto" placeholder="0.00">
+            <label>Estado del pago</label>
+            <select id="estado">
+                <option value="Pagado">✅ Pagado</option>
+                <option value="Deuda">❌ Deuda</option>
+            </select>
+            <button class="btn-accion" style="background: var(--verde-exito)" onclick="addVenta()">CONFIRMAR VENTA</button>
         </div>
 
-        <div id="sec-vendedores" class="seccion"><h3>📊 Ganancias por Vendedor</h3><table id="t_vend"><thead><tr><th>Vendedor</th><th>Total</th></tr></thead><tbody></tbody></table></div>
-        <div id="sec-deudores" class="seccion"><h3>⚠️ Deudores</h3><table id="t_deu"><thead><tr><th>Cliente</th><th>$</th></tr></thead><tbody></tbody></table></div>
-        <div id="sec-historial" class="seccion"><h3>📜 Historial</h3><table id="t_his"><thead><tr><th>Vendedor</th><th>Cliente</th><th>$</th></tr></thead><tbody></tbody></table></div>
-        <div id="sec-ganancias" class="seccion"><h3>💵 Mis Ganancias</h3><h2 id="total_g" style="color: var(--verde-exito);">$0</h2></div>
+        <!-- TABLAS Y REPORTES -->
+        <div id="sec-vendedores" class="seccion">
+            <button class="volver-btn" onclick="cerrar()"><i class="fas fa-arrow-left"></i> Volver</button>
+            <h3>📊 Ventas Totales</h3>
+            <table><thead><tr><th>Vendedor</th><th>Total Neto</th></tr></thead><tbody id="tbody-vend"></tbody></table>
+        </div>
+
+        <div id="sec-deudores" class="seccion">
+            <button class="volver-btn" onclick="cerrar()"><i class="fas fa-arrow-left"></i> Volver</button>
+            <h3 style="color: var(--rojo)">⚠️ Cartera de Deudores</h3>
+            <table><thead><tr><th>Cliente</th><th>Saldo Pendiente</th></tr></thead><tbody id="tbody-deu"></tbody></table>
+        </div>
+
+        <div id="sec-historial" class="seccion">
+            <button class="volver-btn" onclick="cerrar()"><i class="fas fa-arrow-left"></i> Volver</button>
+            <h3>📜 Registro Histórico</h3>
+            <div class="tabla-scroll">
+                <table><thead><tr><th>Vendedor</th><th>Cliente</th><th>Monto</th></tr></thead><tbody id="tbody-his"></tbody></table>
+            </div>
+        </div>
+
+        <div id="sec-ganancias" class="seccion">
+            <button class="volver-btn" onclick="cerrar()"><i class="fas fa-arrow-left"></i> Volver</button>
+            <h3>💵 Balance de Caja</h3>
+            <p style="text-align: center; color: var(--texto-secundario);">Total Recaudado</p>
+            <h2 id="total_g">$0</h2>
+        </div>
     </div>
 
     <script>
+        // MANTENEMOS TU LÓGICA ORIGINAL
         let vendedores = JSON.parse(localStorage.getItem('db_v_2')) || ["Admin"];
         let clientes = JSON.parse(localStorage.getItem('db_c_2')) || [];
         let ventas = JSON.parse(localStorage.getItem('db_vt_2')) || [];
 
         function mostrar(id) {
             document.querySelectorAll('.seccion').forEach(s => s.style.display = 'none');
+            document.getElementById('menu-principal').style.display = 'none';
             document.getElementById(id).style.display = 'block';
             actualizarTablas();
+        }
+
+        function cerrar() {
+            document.querySelectorAll('.seccion').forEach(s => s.style.display = 'none');
+            document.getElementById('menu-principal').style.display = 'grid';
         }
 
         function addVendedor() {
@@ -89,7 +294,7 @@
                 vendedores.push(`${n} ${a}`);
                 localStorage.setItem('db_v_2', JSON.stringify(vendedores));
                 document.getElementById('v_nom').value = ""; document.getElementById('v_ape').value = "";
-                actualizarSelects(); alert("Trabajador registrado!");
+                actualizarSelects(); alert("Trabajador registrado con éxito");
             }
         }
 
@@ -100,15 +305,15 @@
                 clientes.push(`${n} ${a}`);
                 localStorage.setItem('db_c_2', JSON.stringify(clientes));
                 document.getElementById('c_nom').value = ""; document.getElementById('c_ape').value = "";
-                actualizarSelects(); alert("Cliente registrado!");
+                actualizarSelects(); alert("Cliente guardado");
             }
         }
 
         function actualizarSelects() {
             let sv = document.getElementById('selVendedor');
             let sc = document.getElementById('selCli');
-            sv.innerHTML = vendedores.map(v => `<option value="${v}">${v}</option>`).join('');
-            sc.innerHTML = clientes.length ? clientes.map(c => `<option value="${c}">${c}</option>`).join('') : '<option>No hay clientes</option>';
+            if(sv) sv.innerHTML = vendedores.map(v => `<option value="${v}">${v}</option>`).join('');
+            if(sc) sc.innerHTML = clientes.length ? clientes.map(c => `<option value="${c}">${c}</option>`).join('') : '<option>No hay clientes</option>';
         }
 
         function addVenta() {
@@ -120,29 +325,36 @@
                 ventas.push({v, c, m, e});
                 localStorage.setItem('db_vt_2', JSON.stringify(ventas));
                 document.getElementById('monto').value = "";
-                alert("Venta registrada!");
+                alert("¡Venta registrada!");
+                cerrar();
+            } else {
+                alert("Por favor completa todos los campos");
             }
         }
 
         function actualizarTablas() {
+            // Tabla Vendedores
             let h_v = "";
             vendedores.forEach(vend => {
                 let total = ventas.filter(vt => vt.v === vend && vt.e === 'Pagado').reduce((acc, curr) => acc + curr.m, 0);
-                h_v += `<tr><td>${vend}</td><td>$${total}</td></tr>`;
+                h_v += `<tr><td><i class="fas fa-user-circle"></i> ${vend}</td><td><strong>$${total.toLocaleString()}</strong></td></tr>`;
             });
-            document.querySelector('#t_vend tbody').innerHTML = h_v;
+            document.getElementById('tbody-vend').innerHTML = h_v;
 
+            // Tabla Historial, Deudores y Total
             let h_his = ""; let h_deu = ""; let total_g = 0;
-            ventas.forEach(vt => {
-                h_his += `<tr><td>${vt.v}</td><td>${vt.c}</td><td>$${vt.m}</td></tr>`;
-                if(vt.e === 'Deuda') h_deu += `<tr><td>${vt.c}</td><td>$${vt.m}</td></tr>`;
+            ventas.slice().reverse().forEach(vt => { // Reverse para ver lo más nuevo primero
+                h_his += `<tr><td>${vt.v}</td><td>${vt.c}</td><td>$${vt.m.toLocaleString()}</td></tr>`;
+                if(vt.e === 'Deuda') h_deu += `<tr><td>${vt.c}</td><td style="color:var(--rojo)">$${vt.m.toLocaleString()}</td></tr>`;
                 if(vt.e === 'Pagado') total_g += vt.m;
             });
-            document.querySelector('#t_his tbody').innerHTML = h_his;
-            document.querySelector('#t_deu tbody').innerHTML = h_deu;
-            document.getElementById('total_g').innerText = "$" + total_g;
+            
+            document.getElementById('tbody-his').innerHTML = h_his;
+            document.getElementById('tbody-deu').innerHTML = h_deu;
+            document.getElementById('total_g').innerText = "$" + total_g.toLocaleString();
         }
 
+        // Inicialización
         actualizarSelects();
     </script>
 </body>
