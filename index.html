@@ -12,8 +12,10 @@
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-principal); color: var(--texto-titulos); margin: 0; padding: 20px; text-align: center; }
         .contenedor { max-width: 500px; margin: 0 auto; }
+        header { margin-bottom: 30px; }
+        h1 { font-size: 3rem; margin: 0; letter-spacing: 5px; color: var(--texto-titulos); }
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .opcion-btn { background: var(--bg-tarjeta); border: 1px solid #334155; border-radius: 12px; padding: 20px 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 10px; color: inherit; }
+        .opcion-btn { background: var(--bg-tarjeta); border: 1px solid #334155; border-radius: 12px; padding: 20px 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 10px; color: inherit; text-decoration: none; }
         .btn-full { grid-column: span 2; padding: 15px; flex-direction: row; justify-content: center; }
         .seccion { background: var(--bg-tarjeta); padding: 20px; border-radius: 15px; margin-top: 20px; display: none; text-align: left; border: 1px solid var(--azul); }
         input, select { width: 100%; padding: 12px; margin: 8px 0; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 8px; box-sizing: border-box; }
@@ -25,9 +27,8 @@
 <body>
     <div class="contenedor">
         <header>
-            <p style="color: var(--texto-secundario); font-size: 0.8rem;">PANEL DE CONTROL GENERAL</p>
-            <h1>SISTEMA GESTIÓN PRO</h1>
-            <p>Bienvenido: <strong>Maxi Toledo</strong></p>
+            <p style="color: var(--texto-secundario); font-size: 0.8rem; margin-bottom: 5px;">PANEL DE CONTROL GENERAL</p>
+            <h1>MAX</h1>
         </header>
 
         <nav class="menu-grid">
@@ -40,43 +41,38 @@
             <div class="opcion-btn btn-full" onclick="mostrar('sec-historial')"><i class="fas fa-history" style="margin-right:10px;"></i> VER HISTORIAL COMPLETO</div>
         </nav>
 
-        <!-- REGISTRO TRABAJADORES -->
+        <!-- SECCIONES (El resto del código se mantiene igual para no perder funcionalidad) -->
         <div id="sec-roles" class="seccion">
             <h3>🛡️ Nuevo Trabajador</h3>
-            <input type="text" id="v_nom" placeholder="Nombre (ej: Pablo)">
-            <input type="text" id="v_ape" placeholder="Apellido (ej: Garcia)">
+            <input type="text" id="v_nom" placeholder="Nombre">
+            <input type="text" id="v_ape" placeholder="Apellido">
             <button class="btn-accion" onclick="addVendedor()">REGISTRAR</button>
         </div>
 
-        <!-- REGISTRO CLIENTES -->
         <div id="sec-clientes" class="seccion">
             <h3>➕ Nuevo Cliente</h3>
-            <input type="text" id="c_nom" placeholder="Nombre (ej: Juan)">
-            <input type="text" id="c_ape" placeholder="Apellido (ej: Perez)">
+            <input type="text" id="c_nom" placeholder="Nombre">
+            <input type="text" id="c_ape" placeholder="Apellido">
             <button class="btn-accion" onclick="addCli()">GUARDAR</button>
         </div>
 
-        <!-- REGISTRO VENTAS -->
         <div id="sec-venta" class="seccion">
             <h3>💰 Nueva Venta</h3>
-            <label>Vendedor:</label>
             <select id="selVendedor"></select>
-            <label>Cliente:</label>
             <select id="selCli"></select>
             <input type="number" id="monto" placeholder="Monto $">
             <select id="estado"><option value="Pagado">Pagado</option><option value="Deuda">Deuda</option></select>
             <button class="btn-accion" onclick="addVenta()">REGISTRAR VENTA</button>
         </div>
 
-        <!-- TABLAS Y RESULTADOS -->
         <div id="sec-vendedores" class="seccion"><h3>📊 Ganancias por Vendedor</h3><table id="t_vend"><thead><tr><th>Vendedor</th><th>Total</th></tr></thead><tbody></tbody></table></div>
         <div id="sec-deudores" class="seccion"><h3>⚠️ Deudores</h3><table id="t_deu"><thead><tr><th>Cliente</th><th>$</th></tr></thead><tbody></tbody></table></div>
-        <div id="sec-historial" class="seccion"><h3>📜 Historial</h3><table id="t_his"><thead><tr><th>Vendedor</th><th>Cliente</th><th>$</th><th>Estado</th></tr></thead><tbody></tbody></table></div>
+        <div id="sec-historial" class="seccion"><h3>📜 Historial</h3><table id="t_his"><thead><tr><th>Vendedor</th><th>Cliente</th><th>$</th></tr></thead><tbody></tbody></table></div>
         <div id="sec-ganancias" class="seccion"><h3>💵 Mis Ganancias</h3><h2 id="total_g" style="color: var(--verde-exito);">$0</h2></div>
     </div>
 
     <script>
-        let vendedores = JSON.parse(localStorage.getItem('db_v_2')) || ["Maxi Toledo"];
+        let vendedores = JSON.parse(localStorage.getItem('db_v_2')) || ["Admin"];
         let clientes = JSON.parse(localStorage.getItem('db_c_2')) || [];
         let ventas = JSON.parse(localStorage.getItem('db_vt_2')) || [];
 
@@ -129,7 +125,6 @@
         }
 
         function actualizarTablas() {
-            // Ganancias Vendedores
             let h_v = "";
             vendedores.forEach(vend => {
                 let total = ventas.filter(vt => vt.v === vend && vt.e === 'Pagado').reduce((acc, curr) => acc + curr.m, 0);
@@ -137,10 +132,9 @@
             });
             document.querySelector('#t_vend tbody').innerHTML = h_v;
 
-            // Historial y Deudores
             let h_his = ""; let h_deu = ""; let total_g = 0;
             ventas.forEach(vt => {
-                h_his += `<tr><td>${vt.v}</td><td>${vt.c}</td><td>$${vt.m}</td><td>${vt.e}</td></tr>`;
+                h_his += `<tr><td>${vt.v}</td><td>${vt.c}</td><td>$${vt.m}</td></tr>`;
                 if(vt.e === 'Deuda') h_deu += `<tr><td>${vt.c}</td><td>$${vt.m}</td></tr>`;
                 if(vt.e === 'Pagado') total_g += vt.m;
             });
