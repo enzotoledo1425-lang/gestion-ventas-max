@@ -32,7 +32,6 @@
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
         th, td { padding: 10px; border-bottom: 1px solid #334155; text-align: left; }
         .monto-total { font-size: 1.5rem; color: var(--verde-exito); font-weight: bold; text-align: center; margin: 20px 0; }
-        .btn-borrar { background: var(--rojo); font-size: 0.7rem; padding: 5px; margin-top: 20px; opacity: 0.6; }
     </style>
 </head>
 <body>
@@ -56,19 +55,24 @@
             <div class="opcion-btn" onclick="mostrar('sec-ganancias')">
                 <i class="fas fa-chart-line" style="color: var(--verde-exito);"></i><span>Mis Ganancias</span>
             </div>
-            <div class="opcion-btn btn-full" onclick="mostrar('sec-historial')">
-                <i class="fas fa-history" style="margin-right: 10px; color: var(--texto-secundario);"></i> VER HISTORIAL COMPLETO
+            <div class="opcion-btn btn-full" onclick="mostrar('sec-vendedores')">
+                <i class="fas fa-chart-pie" style="margin-right: 10px; color: #a78bfa;"></i> GANANCIAS POR VENDEDOR
+            </div>
+            <div class="opcion-btn btn-full" onclick="mostrar('sec-roles')">
+                <i class="fas fa-user-shield" style="margin-right: 10px; color: #94a3b8;"></i> ADMINISTRAR TRABAJADORES Y ROLES
+            </div>
+            <div class="opcion-btn btn-full" onclick="mostrar('sec-historial')" style="opacity: 0.8;">
+                <i class="fas fa-history" style="margin-right: 10px;"></i> VER HISTORIAL COMPLETO
             </div>
         </nav>
 
-        <!-- REGISTRAR CLIENTE -->
+        <!-- SECCIONES -->
         <div id="sec-clientes" class="seccion">
             <h3>➕ Nuevo Cliente</h3>
             <input type="text" id="nomCli" placeholder="Nombre completo">
             <button class="btn-accion" onclick="addCli()">GUARDAR CLIENTE</button>
         </div>
 
-        <!-- REGISTRAR VENTA -->
         <div id="sec-venta" class="seccion">
             <h3>💰 Nueva Venta</h3>
             <select id="selCli"><option value="">Seleccionar Cliente</option></select>
@@ -78,24 +82,30 @@
             <button class="btn-accion" onclick="addVenta()">REGISTRAR OPERACIÓN</button>
         </div>
 
-        <!-- MIS GANANCIAS -->
         <div id="sec-ganancias" class="seccion">
-            <h3>💵 Ganancias Totales</h3>
+            <h3>💵 Mis Ganancias</h3>
             <div class="monto-total" id="displayGanancias">$0</div>
-            <p style="text-align:center; color: var(--texto-secundario);">Solo incluye ventas marcadas como "Pagado".</p>
+            <p style="text-align:center; color: var(--texto-secundario);">Total recaudado de ventas pagadas.</p>
         </div>
 
-        <!-- DEUDORES -->
         <div id="sec-deudores" class="seccion">
             <h3>⚠️ Lista de Deudores</h3>
             <table id="tabDeuda"><thead><tr><th>Cliente</th><th>Monto</th></tr></thead><tbody></tbody></table>
         </div>
 
-        <!-- HISTORIAL COMPLETO -->
+        <div id="sec-vendedores" class="seccion">
+            <h3>📊 Ganancias por Vendedor</h3>
+            <p>Sección en desarrollo: Aquí podrás ver el rendimiento de cada trabajador.</p>
+        </div>
+
+        <div id="sec-roles" class="seccion">
+            <h3>🛡️ Trabajadores y Roles</h3>
+            <p>Configuración de permisos y accesos para el personal.</p>
+        </div>
+
         <div id="sec-historial" class="seccion">
             <h3>📜 Historial General</h3>
             <table id="tabHistorial"><thead><tr><th>Cliente</th><th>$</th><th>Estado</th></tr></thead><tbody></tbody></table>
-            <button class="btn-accion btn-borrar" onclick="limpiarTodo()">LIMPIAR TODOS LOS DATOS</button>
         </div>
 
         <p style="color: var(--texto-secundario); font-size: 0.7rem; margin-top: 40px;">Administración de Sistema © 2026</p>
@@ -109,19 +119,12 @@
             document.querySelectorAll('.seccion').forEach(s => s.style.display = 'none');
             document.getElementById(id).style.display = 'block';
             if(id === 'sec-ganancias') calcularGanancias();
-            if(id === 'sec-deudores') cargarTablas();
-            if(id === 'sec-historial') cargarTablas();
+            if(id === 'sec-deudores' || id === 'sec-historial') cargarTablas();
         }
 
         function addCli() {
             let n = document.getElementById('nomCli').value;
-            if(n) {
-                db_clientes.push(n);
-                localStorage.setItem('clientes', JSON.stringify(db_clientes));
-                actualizarSelect();
-                document.getElementById('nomCli').value = "";
-                alert("Cliente guardado");
-            }
+            if(n) { db_clientes.push(n); localStorage.setItem('clientes', JSON.stringify(db_clientes)); actualizarSelect(); alert("Cliente guardado"); }
         }
 
         function actualizarSelect() {
@@ -137,8 +140,7 @@
             if(c && m) {
                 db_ventas.push({cliente: c, monto: m, estado: st});
                 localStorage.setItem('ventas', JSON.stringify(db_ventas));
-                alert("Venta registrada con éxito");
-                document.getElementById('cash').value = "";
+                alert("Venta registrada");
             }
         }
 
@@ -148,26 +150,14 @@
         }
 
         function cargarTablas() {
-            let bodyDeuda = document.querySelector('#tabDeuda tbody');
-            let bodyHistorial = document.querySelector('#tabHistorial tbody');
-            bodyDeuda.innerHTML = "";
-            bodyHistorial.innerHTML = "";
-            
+            let bodyD = document.querySelector('#tabDeuda tbody');
+            let bodyH = document.querySelector('#tabHistorial tbody');
+            bodyD.innerHTML = ""; bodyH.innerHTML = "";
             db_ventas.forEach(v => {
-                bodyHistorial.innerHTML += `<tr><td>${v.cliente}</td><td>$${v.monto}</td><td>${v.estado}</td></tr>`;
-                if(v.estado === 'Deuda') {
-                    bodyDeuda.innerHTML += `<tr><td>${v.cliente}</td><td>$${v.monto}</td></tr>`;
-                }
+                bodyH.innerHTML += `<tr><td>${v.cliente}</td><td>$${v.monto}</td><td>${v.estado}</td></tr>`;
+                if(v.estado === 'Deuda') bodyD.innerHTML += `<tr><td>${v.cliente}</td><td>$${v.monto}</td></tr>`;
             });
         }
-
-        function limpiarTodo() {
-            if(confirm("¿Estás seguro? Se borrarán todos los clientes y ventas.")) {
-                localStorage.clear();
-                location.reload();
-            }
-        }
-
         actualizarSelect();
     </script>
 </body>
