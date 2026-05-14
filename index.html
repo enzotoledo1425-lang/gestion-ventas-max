@@ -6,185 +6,75 @@
     <title>SISTEMA GESTIÓN PRO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --bg-principal: #0f172a;
-            --bg-tarjeta: #1e293b;
-            --texto-titulos: #f8fafc;
-            --texto-secundario: #94a3b8;
-            --borde-suave: #334155;
-            --verde-exito: #22c55e;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-principal);
-            color: var(--texto-titulos);
-            margin: 0;
-            padding: 20px;
-        }
-
-        .contenedor {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        header h1 { font-size: 1.7rem; margin: 10px 0; }
-        .usuario-actual { margin-bottom: 25px; color: var(--texto-secundario); }
-        .usuario-actual span { color: #fff; font-weight: 600; }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .opcion-btn {
-            background-color: var(--bg-tarjeta);
-            border: 1px solid var(--borde-suave);
-            border-radius: 10px;
-            padding: 20px 10px;
-            text-decoration: none;
-            color: var(--texto-titulos);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .btn-full { grid-column: span 2; flex-direction: row; font-size: 0.85rem; }
-
-        /* Formulario Oculto */
-        #seccion-venta {
-            background: var(--bg-tarjeta);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            display: none;
-            text-align: left;
-            border: 1px solid var(--verde-exito);
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background: #0f172a;
-            border: 1px solid var(--borde-suave);
-            color: white;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        .btn-guardar {
-            background: var(--verde-exito);
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 100%;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Tabla de Resultados */
-        .tabla-contenedor {
-            margin-top: 30px;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-            background: var(--bg-tarjeta);
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid var(--borde-suave);
-            text-align: left;
-        }
-
-        th { background: #334155; }
+        :root { --bg-principal: #0f172a; --bg-tarjeta: #1e293b; --texto-titulos: #f8fafc; --verde-exito: #22c55e; --azul: #3b82f6; }
+        body { font-family: sans-serif; background-color: var(--bg-principal); color: var(--texto-titulos); margin: 0; padding: 20px; }
+        .contenedor { max-width: 500px; margin: 0 auto; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .opcion-btn { background: var(--bg-tarjeta); padding: 15px; border-radius: 10px; text-align: center; cursor: pointer; }
+        .seccion { background: var(--bg-tarjeta); padding: 15px; border-radius: 10px; margin-top: 15px; display: none; }
+        input, select { width: 100%; padding: 10px; margin: 5px 0; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: var(--verde-exito); border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 5px; }
     </style>
 </head>
 <body>
-
     <div class="contenedor">
-        <header>
-            <p style="color:var(--texto-secundario); font-size: 0.8rem;">PANEL GENERAL</p>
-            <h1>SISTEMA GESTIÓN PRO</h1>
-        </header>
-
-        <div class="usuario-actual">Bienvenido: <span>Maxi Toledo</span></div>
-
+        <h1>SISTEMA GESTIÓN PRO</h1>
         <nav class="menu-grid">
-            <div class="opcion-btn" onclick="mostrarVenta()">
-                <i class="fa-solid fa-box-open" style="color:#eab308"></i>
-                <span>Registrar Venta</span>
-            </div>
-            <div class="opcion-btn"><i class="fa-solid fa-users" style="color:#3b82f6"></i><span>Clientes</span></div>
-            <div class="opcion-btn" style="border-color:rgba(239,68,68,0.5)"><i class="fa-solid fa-triangle-exclamation" style="color:#ef4444"></i><span>Deudores</span></div>
-            <div class="opcion-btn"><i class="fa-solid fa-sack-dollar" style="color:#22c55e"></i><span>Mis Ganancias</span></div>
+            <div class="opcion-btn" onclick="toggle('form-cliente')">➕ Cliente</div>
+            <div class="opcion-btn" onclick="toggle('form-venta')">💰 Venta</div>
         </nav>
 
-        <div id="seccion-venta">
-            <h3 style="margin-top:0">Nueva Venta</h3>
-            <input type="text" id="cliente" placeholder="Nombre del Cliente">
-            <input type="text" id="producto" placeholder="Producto/Servicio">
-            <input type="number" id="monto" placeholder="Monto ($)">
-            <button class="btn-guardar" onclick="guardarVenta()">GUARDAR REGISTRO</button>
+        <div id="form-cliente" class="seccion">
+            <h3>Registrar Cliente</h3>
+            <input type="text" id="nombreCliente" placeholder="Nombre del Cliente">
+            <button onclick="guardarCliente()">GUARDAR CLIENTE</button>
         </div>
 
-        <div class="tabla-contenedor">
-            <h3>Historial de Ventas</h3>
-            <table id="tablaVentas">
-                <thead>
-                    <tr>
-                        <th>Cliente</th>
-                        <th>Producto</th>
-                        <th>Monto</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    </tbody>
-            </table>
+        <div id="form-venta" class="seccion">
+            <h3>Nueva Venta</h3>
+            <select id="selectCliente"><option value="">Selecciona un cliente</option></select>
+            <input type="text" id="producto" placeholder="Producto">
+            <input type="number" id="monto" placeholder="Monto">
+            <button onclick="guardarVenta()">REGISTRAR</button>
+        </div>
+
+        <div id="lista-ventas" class="seccion" style="display: block;">
+            <h3>Historial</h3>
+            <table id="tablaVentas" width="100%"><thead><tr><th>Cliente</th><th>Prod</th><th>$</th></tr></thead><tbody></tbody></table>
         </div>
     </div>
 
     <script>
-        // Función para mostrar el formulario
-        function mostrarVenta() {
-            document.getElementById('seccion-venta').style.display = 'block';
-        }
-
-        // Función para guardar y mostrar en la tabla
-        function guardarVenta() {
-            const cliente = document.getElementById('cliente').value;
-            const producto = document.getElementById('producto').value;
-            const monto = document.getElementById('monto').value;
-
-            if(cliente && producto && monto) {
-                const tabla = document.getElementById('tablaVentas').getElementsByTagName('tbody')[0];
-                const nuevaFila = tabla.insertRow();
-
-                nuevaFila.innerHTML = `<td>${cliente}</td><td>${producto}</td><td>$${monto}</td>`;
-
-                // Limpiar formulario y ocultar
-                document.getElementById('cliente').value = "";
-                document.getElementById('producto').value = "";
-                document.getElementById('monto').value = "";
-                document.getElementById('seccion-venta').style.display = 'none';
-                
-                alert("Venta registrada con éxito");
-            } else {
-                alert("Por favor rellena todos los campos");
+        let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+        function toggle(id) { document.getElementById(id).style.display = document.getElementById(id).style.display === 'block' ? 'none' : 'block'; }
+        
+        function guardarCliente() {
+            let nombre = document.getElementById('nombreCliente').value;
+            if(nombre) {
+                clientes.push(nombre);
+                localStorage.setItem('clientes', JSON.stringify(clientes));
+                actualizarSelect();
+                alert("Cliente guardado");
             }
         }
+
+        function actualizarSelect() {
+            let sel = document.getElementById('selectCliente');
+            sel.innerHTML = '<option value="">Selecciona un cliente</option>';
+            clientes.forEach(c => sel.innerHTML += `<option value="${c}">${c}</option>`);
+        }
+
+        function guardarVenta() {
+            let cliente = document.getElementById('selectCliente').value;
+            let prod = document.getElementById('producto').value;
+            let monto = document.getElementById('monto').value;
+            if(cliente && prod && monto) {
+                let tabla = document.getElementById('tablaVentas').getElementsByTagName('tbody')[0];
+                tabla.innerHTML += `<tr><td>${cliente}</td><td>${prod}</td><td>$${monto}</td></tr>`;
+                alert("Venta registrada");
+            }
+        }
+        actualizarSelect();
     </script>
 </body>
 </html>
