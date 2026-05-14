@@ -4,173 +4,187 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISTEMA GESTIÓN PRO</title>
-    <!-- Iconos profesionales -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg-principal: #0f172a; /* Azul oscuro mate */
-            --bg-tarjeta: #1e293b;   /* Gris azulado para botones */
+            --bg-principal: #0f172a;
+            --bg-tarjeta: #1e293b;
             --texto-titulos: #f8fafc;
             --texto-secundario: #94a3b8;
             --borde-suave: #334155;
+            --verde-exito: #22c55e;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-principal);
             color: var(--texto-titulos);
             margin: 0;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
+            padding: 20px;
         }
 
         .contenedor {
             width: 100%;
-            max-width: 450px;
-            padding: 40px 20px;
+            max-width: 500px;
+            margin: 0 auto;
             text-align: center;
         }
 
-        header p {
-            color: var(--texto-secundario);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 0;
-        }
+        header h1 { font-size: 1.7rem; margin: 10px 0; }
+        .usuario-actual { margin-bottom: 25px; color: var(--texto-secundario); }
+        .usuario-actual span { color: #fff; font-weight: 600; }
 
-        header h1 {
-            font-size: 1.7rem;
-            font-weight: 700;
-            margin: 10px 0;
-        }
-
-        .usuario-actual {
-            margin-bottom: 35px;
-            font-size: 1rem;
-            color: var(--texto-titulos);
-        }
-
-        .usuario-actual span {
-            font-weight: 600;
-            color: #ffffff;
-        }
-
-        /* Cuadrícula de Navegación */
         .menu-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
+            margin-bottom: 20px;
         }
 
         .opcion-btn {
             background-color: var(--bg-tarjeta);
             border: 1px solid var(--borde-suave);
             border-radius: 10px;
-            padding: 25px 15px;
+            padding: 20px 10px;
             text-decoration: none;
             color: var(--texto-titulos);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-            transition: background-color 0.2s ease;
+            gap: 10px;
+            cursor: pointer;
         }
 
-        .opcion-btn:hover {
-            background-color: #2d3a4f;
+        .btn-full { grid-column: span 2; flex-direction: row; font-size: 0.85rem; }
+
+        /* Formulario Oculto */
+        #seccion-venta {
+            background: var(--bg-tarjeta);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            text-align: left;
+            border: 1px solid var(--verde-exito);
         }
 
-        .opcion-btn i {
-            font-size: 1.4rem;
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: #0f172a;
+            border: 1px solid var(--borde-suave);
+            color: white;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
 
-        /* Botones de ancho completo */
-        .btn-full {
-            grid-column: span 2;
-            flex-direction: row;
-            justify-content: center;
-            padding: 18px;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
+        .btn-guardar {
+            background: var(--verde-exito);
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
-        /* Colores de Iconos (Sobrios) */
-        .color-venta { color: #eab308; } /* Dorado suave */
-        .color-clientes { color: #3b82f6; } /* Azul corporativo */
-        .color-deudores { color: #ef4444; } /* Rojo suave */
-        .color-ganancias { color: #22c55e; } /* Verde suave */
-        .color-admin { color: #94a3b8; }
-
-        /* Estilo especial para Deudores según la imagen */
-        .btn-deudores {
-            border: 1.5px solid rgba(239, 68, 68, 0.5);
+        /* Tabla de Resultados */
+        .tabla-contenedor {
+            margin-top: 30px;
+            overflow-x: auto;
         }
 
-        footer {
-            margin-top: 40px;
-            font-size: 0.75rem;
-            color: var(--texto-secundario);
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            background: var(--bg-tarjeta);
         }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid var(--borde-suave);
+            text-align: left;
+        }
+
+        th { background: #334155; }
     </style>
 </head>
 <body>
 
     <div class="contenedor">
         <header>
-            <p>Panel de Control General</p>
+            <p style="color:var(--texto-secundario); font-size: 0.8rem;">PANEL GENERAL</p>
             <h1>SISTEMA GESTIÓN PRO</h1>
         </header>
 
-        <div class="usuario-actual">
-            Bienvenido: <span>Maxi Toledo</span>
-        </div>
+        <div class="usuario-actual">Bienvenido: <span>Maxi Toledo</span></div>
 
         <nav class="menu-grid">
-            <!-- Registrar Venta -->
-            <a href="#" class="opcion-btn">
-                <i class="fa-solid fa-box-open color-venta"></i>
+            <div class="opcion-btn" onclick="mostrarVenta()">
+                <i class="fa-solid fa-box-open" style="color:#eab308"></i>
                 <span>Registrar Venta</span>
-            </a>
-
-            <!-- Lista de Clientes -->
-            <a href="#" class="opcion-btn">
-                <i class="fa-solid fa-users color-clientes"></i>
-                <span>Clientes</span>
-            </a>
-
-            <!-- Deudores -->
-            <a href="#" class="opcion-btn btn-deudores">
-                <i class="fa-solid fa-triangle-exclamation color-deudores"></i>
-                <span>Deudores</span>
-            </a>
-
-            <!-- Ganancias -->
-            <a href="#" class="opcion-btn">
-                <i class="fa-solid fa-money-bill-trend-up color-ganancias"></i>
-                <span>Mis Ganancias</span>
-            </a>
-
-            <!-- Ganancias por Vendedor -->
-            <a href="#" class="opcion-btn btn-full">
-                <i class="fa-solid fa-chart-pie color-admin" style="margin-right: 10px;"></i>
-                Ganancias por Vendedor
-            </a>
-
-            <!-- Administrar Trabajadores -->
-            <a href="#" class="opcion-btn btn-full">
-                <i class="fa-solid fa-id-card-clip color-admin" style="margin-right: 10px;"></i>
-                Administrar Trabajadores y Roles
-            </a>
+            </div>
+            <div class="opcion-btn"><i class="fa-solid fa-users" style="color:#3b82f6"></i><span>Clientes</span></div>
+            <div class="opcion-btn" style="border-color:rgba(239,68,68,0.5)"><i class="fa-solid fa-triangle-exclamation" style="color:#ef4444"></i><span>Deudores</span></div>
+            <div class="opcion-btn"><i class="fa-solid fa-sack-dollar" style="color:#22c55e"></i><span>Mis Ganancias</span></div>
         </nav>
 
-        <footer>
-            Administración de Sistema &copy; 2026
-        </footer>
+        <div id="seccion-venta">
+            <h3 style="margin-top:0">Nueva Venta</h3>
+            <input type="text" id="cliente" placeholder="Nombre del Cliente">
+            <input type="text" id="producto" placeholder="Producto/Servicio">
+            <input type="number" id="monto" placeholder="Monto ($)">
+            <button class="btn-guardar" onclick="guardarVenta()">GUARDAR REGISTRO</button>
+        </div>
+
+        <div class="tabla-contenedor">
+            <h3>Historial de Ventas</h3>
+            <table id="tablaVentas">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Producto</th>
+                        <th>Monto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
     </div>
 
+    <script>
+        // Función para mostrar el formulario
+        function mostrarVenta() {
+            document.getElementById('seccion-venta').style.display = 'block';
+        }
+
+        // Función para guardar y mostrar en la tabla
+        function guardarVenta() {
+            const cliente = document.getElementById('cliente').value;
+            const producto = document.getElementById('producto').value;
+            const monto = document.getElementById('monto').value;
+
+            if(cliente && producto && monto) {
+                const tabla = document.getElementById('tablaVentas').getElementsByTagName('tbody')[0];
+                const nuevaFila = tabla.insertRow();
+
+                nuevaFila.innerHTML = `<td>${cliente}</td><td>${producto}</td><td>$${monto}</td>`;
+
+                // Limpiar formulario y ocultar
+                document.getElementById('cliente').value = "";
+                document.getElementById('producto').value = "";
+                document.getElementById('monto').value = "";
+                document.getElementById('seccion-venta').style.display = 'none';
+                
+                alert("Venta registrada con éxito");
+            } else {
+                alert("Por favor rellena todos los campos");
+            }
+        }
+    </script>
 </body>
 </html>
