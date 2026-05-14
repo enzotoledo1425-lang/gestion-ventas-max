@@ -4,77 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISTEMA GESTIÓN PRO</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --bg-principal: #0f172a; --bg-tarjeta: #1e293b; --texto-titulos: #f8fafc; --verde-exito: #22c55e; --azul: #3b82f6; }
+        :root { --bg-principal: #0f172a; --bg-tarjeta: #1e293b; --texto-titulos: #f8fafc; --verde-exito: #22c55e; --rojo: #ef4444; }
         body { font-family: sans-serif; background-color: var(--bg-principal); color: var(--texto-titulos); margin: 0; padding: 20px; }
         .contenedor { max-width: 500px; margin: 0 auto; }
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .opcion-btn { background: var(--bg-tarjeta); padding: 15px; border-radius: 10px; text-align: center; cursor: pointer; }
-        .seccion { background: var(--bg-tarjeta); padding: 15px; border-radius: 10px; margin-top: 15px; display: none; }
+        .seccion { background: var(--bg-tarjeta); padding: 15px; border-radius: 10px; margin-top: 15px; }
         input, select { width: 100%; padding: 10px; margin: 5px 0; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 5px; box-sizing: border-box; }
-        button { width: 100%; padding: 10px; background: var(--verde-exito); border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 5px; }
+        button { width: 100%; padding: 10px; border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 10px; }
+        .btn-verde { background: var(--verde-exito); }
+        .btn-rojo { background: var(--rojo); }
     </style>
 </head>
 <body>
     <div class="contenedor">
         <h1>SISTEMA GESTIÓN PRO</h1>
-        <nav class="menu-grid">
-            <div class="opcion-btn" onclick="toggle('form-cliente')">➕ Cliente</div>
-            <div class="opcion-btn" onclick="toggle('form-venta')">💰 Venta</div>
-        </nav>
-
-        <div id="form-cliente" class="seccion">
-            <h3>Registrar Cliente</h3>
-            <input type="text" id="nombreCliente" placeholder="Nombre del Cliente">
-            <button onclick="guardarCliente()">GUARDAR CLIENTE</button>
-        </div>
-
-        <div id="form-venta" class="seccion">
-            <h3>Nueva Venta</h3>
-            <select id="selectCliente"><option value="">Selecciona un cliente</option></select>
-            <input type="text" id="producto" placeholder="Producto">
+        
+        <div class="seccion">
+            <h3>Registrar Venta</h3>
+            <select id="selCliente"><option value="">Cliente</option></select>
+            <input type="text" id="prod" placeholder="Producto">
             <input type="number" id="monto" placeholder="Monto">
-            <button onclick="guardarVenta()">REGISTRAR</button>
+            <select id="estado"><option value="Pagado">Pagado</option><option value="Deuda">Deuda</option></select>
+            <button class="btn-verde" onclick="registrar()">REGISTRAR VENTA</button>
         </div>
 
-        <div id="lista-ventas" class="seccion" style="display: block;">
-            <h3>Historial</h3>
-            <table id="tablaVentas" width="100%"><thead><tr><th>Cliente</th><th>Prod</th><th>$</th></tr></thead><tbody></tbody></table>
+        <div class="seccion">
+            <h3>Deudores</h3>
+            <table width="100%" id="tablaDeuda"><tr><th>Cliente</th><th>$</th></tr></table>
         </div>
     </div>
 
     <script>
         let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-        function toggle(id) { document.getElementById(id).style.display = document.getElementById(id).style.display === 'block' ? 'none' : 'block'; }
-        
-        function guardarCliente() {
-            let nombre = document.getElementById('nombreCliente').value;
-            if(nombre) {
-                clientes.push(nombre);
-                localStorage.setItem('clientes', JSON.stringify(clientes));
-                actualizarSelect();
-                alert("Cliente guardado");
-            }
-        }
-
-        function actualizarSelect() {
-            let sel = document.getElementById('selectCliente');
-            sel.innerHTML = '<option value="">Selecciona un cliente</option>';
-            clientes.forEach(c => sel.innerHTML += `<option value="${c}">${c}</option>`);
-        }
-
-        function guardarVenta() {
-            let cliente = document.getElementById('selectCliente').value;
-            let prod = document.getElementById('producto').value;
+        function registrar() {
+            let cliente = document.getElementById('selCliente').value;
             let monto = document.getElementById('monto').value;
-            if(cliente && prod && monto) {
-                let tabla = document.getElementById('tablaVentas').getElementsByTagName('tbody')[0];
-                tabla.innerHTML += `<tr><td>${cliente}</td><td>${prod}</td><td>$${monto}</td></tr>`;
-                alert("Venta registrada");
+            let estado = document.getElementById('estado').value;
+            if(estado === 'Deuda') {
+                let tabla = document.getElementById('tablaDeuda');
+                tabla.innerHTML += `<tr><td>${cliente}</td><td>$${monto}</td></tr>`;
             }
+            alert("Registrado como: " + estado);
         }
-        actualizarSelect();
+        // Cargar clientes en el select
+        let sel = document.getElementById('selCliente');
+        clientes.forEach(c => sel.innerHTML += `<option value="${c}">${c}</option>`);
     </script>
 </body>
 </html>
