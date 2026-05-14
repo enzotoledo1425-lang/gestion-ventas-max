@@ -23,6 +23,7 @@
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
         th, td { padding: 10px; border-bottom: 1px solid #334155; text-align: left; }
         .monto-total { font-size: 1.5rem; color: var(--verde-exito); font-weight: bold; text-align: center; margin: 10px 0; }
+        .badge { background: #334155; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; margin-right: 5px; }
     </style>
 </head>
 <body>
@@ -43,53 +44,59 @@
             <div class="opcion-btn btn-full" onclick="mostrar('sec-historial')"><i class="fas fa-history" style="margin-right:10px;"></i> VER HISTORIAL COMPLETO</div>
         </nav>
 
+        <!-- ADMIN TRABAJADORES -->
+        <div id="sec-roles" class="seccion">
+            <h3>🛡️ Administrar Trabajadores</h3>
+            <input type="text" id="nomVendedor" placeholder="Nombre del nuevo trabajador">
+            <button class="btn-accion" onclick="addVendedor()">REGISTRAR TRABAJADOR</button>
+            <div id="listaVendedores" style="margin-top:15px;">
+                <p style="font-size: 0.8rem; color: var(--texto-secundario);">Equipo actual:</p>
+                <div id="vendedoresBadges"></div>
+            </div>
+        </div>
+
+        <!-- REGISTRAR VENTA -->
+        <div id="sec-venta" class="seccion">
+            <h3>💰 Nueva Venta</h3>
+            <label style="font-size: 0.8rem;">Vendedor responsable:</label>
+            <select id="selVendedor"><option value="">Seleccionar Vendedor</option></select>
+            <label style="font-size: 0.8rem;">Cliente:</label>
+            <select id="selCli"><option value="">Seleccionar Cliente</option></select>
+            <input type="number" id="cash" placeholder="Monto total $">
+            <select id="status"><option value="Pagado">Pagado</option><option value="Deuda">Deuda</option></select>
+            <button class="btn-accion" onclick="addVenta()">FINALIZAR OPERACIÓN</button>
+        </div>
+
+        <!-- GANANCIAS POR VENDEDOR -->
+        <div id="sec-vendedores" class="seccion">
+            <h3>📊 Rendimiento del Equipo</h3>
+            <table id="tabVendedores"><thead><tr><th>Vendedor</th><th>Recaudado (Pagado)</th></tr></thead><tbody></tbody></table>
+        </div>
+
+        <!-- SECCIONES ANTERIORES -->
         <div id="sec-clientes" class="seccion">
             <h3>➕ Nuevo Cliente</h3>
             <input type="text" id="nomCli" placeholder="Nombre completo">
             <button class="btn-accion" onclick="addCli()">GUARDAR CLIENTE</button>
         </div>
-
-        <div id="sec-roles" class="seccion">
-            <h3>🛡️ Agregar Trabajador</h3>
-            <input type="text" id="nomVendedor" placeholder="Nombre del trabajador">
-            <button class="btn-accion" onclick="addVendedor()">REGISTRAR TRABAJADOR</button>
-            <div id="listaVendedores" style="margin-top:10px; font-size:0.8rem;"></div>
-        </div>
-
-        <div id="sec-venta" class="seccion">
-            <h3>💰 Nueva Venta</h3>
-            <select id="selVendedor"><option value="">Seleccionar Vendedor</option></select>
-            <select id="selCli"><option value="">Seleccionar Cliente</option></select>
-            <input type="number" id="cash" placeholder="Monto $">
-            <select id="status"><option value="Pagado">Pagado</option><option value="Deuda">Deuda</option></select>
-            <button class="btn-accion" onclick="addVenta()">REGISTRAR OPERACIÓN</button>
-        </div>
-
         <div id="sec-ganancias" class="seccion">
-            <h3>💵 Mis Ganancias Totales</h3>
+            <h3>💵 Ganancias Globales</h3>
             <div class="monto-total" id="displayGanancias">$0</div>
         </div>
-
-        <div id="sec-vendedores" class="seccion">
-            <h3>📊 Rendimiento por Vendedor</h3>
-            <table id="tabVendedores"><thead><tr><th>Vendedor</th><th>Total Pagado</th></tr></thead><tbody></tbody></table>
-        </div>
-
         <div id="sec-deudores" class="seccion">
             <h3>⚠️ Lista de Deudores</h3>
             <table id="tabDeuda"><thead><tr><th>Cliente</th><th>Monto</th></tr></thead><tbody></tbody></table>
         </div>
-
         <div id="sec-historial" class="seccion">
             <h3>📜 Historial General</h3>
-            <table id="tabHistorial"><thead><tr><th>Vendedor</th><th>Cliente</th><th>$</th></tr></thead><tbody></tbody></table>
+            <table id="tabHistorial"><thead><tr><th>Vendedor</th><th>Cliente</th><th>$</th><th>Estado</th></tr></thead><tbody></tbody></table>
         </div>
     </div>
 
     <script>
         let db_clientes = JSON.parse(localStorage.getItem('clientes')) || [];
         let db_ventas = JSON.parse(localStorage.getItem('ventas')) || [];
-        let db_vendedores = JSON.parse(localStorage.getItem('vendedores')) || ["Admin"];
+        let db_vendedores = JSON.parse(localStorage.getItem('vendedores')) || ["Maxi Toledo"];
 
         function mostrar(id) {
             document.querySelectorAll('.seccion').forEach(s => s.style.display = 'none');
@@ -102,14 +109,20 @@
             cargarTablas();
         }
 
+        function addVendedor() {
+            let n = document.getElementById('nomVendedor').value;
+            if(n) {
+                db_vendedores.push(n);
+                localStorage.setItem('vendedores', JSON.stringify(db_vendedores));
+                actualizarSelects();
+                document.getElementById('nomVendedor').value = "";
+                alert("Trabajador registrado");
+            }
+        }
+
         function addCli() {
             let n = document.getElementById('nomCli').value;
             if(n) { db_clientes.push(n); localStorage.setItem('clientes', JSON.stringify(db_clientes)); actualizarSelects(); alert("Cliente guardado"); }
-        }
-
-        function addVendedor() {
-            let n = document.getElementById('nomVendedor').value;
-            if(n) { db_vendedores.push(n); localStorage.setItem('vendedores', JSON.stringify(db_vendedores)); actualizarSelects(); alert("Vendedor agregado"); }
         }
 
         function actualizarSelects() {
@@ -117,7 +130,10 @@
             db_clientes.forEach(c => sc.innerHTML += `<option value="${c}">${c}</option>`);
             let sv = document.getElementById('selVendedor'); sv.innerHTML = '<option value="">Seleccionar Vendedor</option>';
             db_vendedores.forEach(v => sv.innerHTML += `<option value="${v}">${v}</option>`);
-            document.getElementById('listaVendedores').innerText = "Trabajadores: " + db_vendedores.join(", ");
+            
+            let badges = document.getElementById('vendedoresBadges');
+            badges.innerHTML = "";
+            db_vendedores.forEach(v => badges.innerHTML += `<span class="badge">${v}</span>`);
         }
 
         function addVenta() {
@@ -128,8 +144,9 @@
             if(v && c && m) {
                 db_ventas.push({vendedor: v, cliente: c, monto: m, estado: st});
                 localStorage.setItem('ventas', JSON.stringify(db_ventas));
-                alert("Registrado");
-            }
+                alert("Venta registrada con éxito");
+                document.getElementById('cash').value = "";
+            } else { alert("Por favor completa todos los campos"); }
         }
 
         function cargarRendimiento() {
@@ -144,7 +161,7 @@
             let bodyD = document.querySelector('#tabDeuda tbody'); let bodyH = document.querySelector('#tabHistorial tbody');
             bodyD.innerHTML = ""; bodyH.innerHTML = "";
             db_ventas.forEach(v => {
-                bodyH.innerHTML += `<tr><td>${v.vendedor}</td><td>${v.cliente}</td><td>$${v.monto}</td></tr>`;
+                bodyH.innerHTML += `<tr><td>${v.vendedor}</td><td>${v.cliente}</td><td>$${v.monto}</td><td>${v.estado}</td></tr>`;
                 if(v.estado === 'Deuda') bodyD.innerHTML += `<tr><td>${v.cliente}</td><td>$${v.monto}</td></tr>`;
             });
         }
