@@ -4,51 +4,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISTEMA GESTIÓN PRO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --bg-principal: #0f172a; --bg-tarjeta: #1e293b; --texto-titulos: #f8fafc; --verde-exito: #22c55e; --rojo: #ef4444; }
-        body { font-family: sans-serif; background-color: var(--bg-principal); color: var(--texto-titulos); margin: 0; padding: 20px; }
+        :root {
+            --bg-principal: #0f172a;
+            --bg-tarjeta: #1e293b;
+            --texto-titulos: #f8fafc;
+            --texto-secundario: #94a3b8;
+            --verde-exito: #22c55e;
+            --rojo: #ef4444;
+            --azul: #3b82f6;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-principal); color: var(--texto-titulos); margin: 0; padding: 20px; text-align: center; }
         .contenedor { max-width: 500px; margin: 0 auto; }
-        .seccion { background: var(--bg-tarjeta); padding: 15px; border-radius: 10px; margin-top: 15px; }
-        input, select { width: 100%; padding: 10px; margin: 5px 0; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 5px; box-sizing: border-box; }
-        button { width: 100%; padding: 10px; border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 10px; }
-        .btn-verde { background: var(--verde-exito); }
-        .btn-rojo { background: var(--rojo); }
+        header { margin-bottom: 30px; }
+        header p { color: var(--texto-secundario); font-size: 0.9rem; margin: 5px 0; }
+        
+        /* Diseño de Cuadrícula como en la imagen 1000563320.jpg */
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .opcion-btn { background: var(--bg-tarjeta); border: 1px solid #334155; border-radius: 12px; padding: 25px 10px; cursor: pointer; transition: 0.3s; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .opcion-btn i { font-size: 1.5rem; }
+        .btn-full { grid-column: span 2; padding: 15px; flex-direction: row; justify-content: center; }
+        .deuda-border { border: 1px solid var(--rojo); }
+
+        /* Secciones de Formulario */
+        .seccion { background: var(--bg-tarjeta); padding: 20px; border-radius: 15px; margin-top: 20px; display: none; text-align: left; border: 1px solid var(--verde-exito); }
+        h3 { margin-top: 0; color: var(--verde-exito); }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 8px; box-sizing: border-box; }
+        .btn-accion { width: 100%; padding: 12px; background: var(--verde-exito); border: none; color: white; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 10px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; border-bottom: 1px solid #334155; text-align: left; }
     </style>
 </head>
 <body>
     <div class="contenedor">
-        <h1>SISTEMA GESTIÓN PRO</h1>
-        
-        <div class="seccion">
-            <h3>Registrar Venta</h3>
-            <select id="selCliente"><option value="">Cliente</option></select>
-            <input type="text" id="prod" placeholder="Producto">
-            <input type="number" id="monto" placeholder="Monto">
-            <select id="estado"><option value="Pagado">Pagado</option><option value="Deuda">Deuda</option></select>
-            <button class="btn-verde" onclick="registrar()">REGISTRAR VENTA</button>
+        <header>
+            <p>PANEL DE CONTROL GENERAL</p>
+            <h1>SISTEMA GESTIÓN PRO</h1>
+            <p>Bienvenido: <strong>Maxi Toledo</strong></p>
+        </header>
+
+        <nav class="menu-grid">
+            <div class="opcion-btn" onclick="mostrar('sec-venta')">
+                <i class="fas fa-box" style="color: #fbbf24;"></i>
+                <span>Registrar Venta</span>
+            </div>
+            <div class="opcion-btn" onclick="mostrar('sec-clientes')">
+                <i class="fas fa-users" style="color: #60a5fa;"></i>
+                <span>Clientes</span>
+            </div>
+            <div class="opcion-btn deuda-border" onclick="mostrar('sec-deudores')">
+                <i class="fas fa-exclamation-triangle" style="color: var(--rojo);"></i>
+                <span>Deudores</span>
+            </div>
+            <div class="opcion-btn">
+                <i class="fas fa-chart-line" style="color: #94a3b8;"></i>
+                <span>Mis Ganancias</span>
+            </div>
+            <div class="opcion-btn btn-full">
+                <i class="fas fa-pie-chart" style="margin-right: 10px;"></i> GANANCIAS POR VENDEDOR
+            </div>
+            <div class="opcion-btn btn-full">
+                <i class="fas fa-id-card" style="margin-right: 10px;"></i> ADMINISTRAR TRABAJADORES Y ROLES
+            </div>
+        </nav>
+
+        <!-- Secciones Ocultas -->
+        <div id="sec-clientes" class="seccion">
+            <h3>➕ Nuevo Cliente</h3>
+            <input type="text" id="nomCli" placeholder="Nombre completo">
+            <button class="btn-accion" onclick="addCli()">GUARDAR CLIENTE</button>
         </div>
 
-        <div class="seccion">
-            <h3>Deudores</h3>
-            <table width="100%" id="tablaDeuda"><tr><th>Cliente</th><th>$</th></tr></table>
+        <div id="sec-venta" class="seccion">
+            <h3>💰 Nueva Venta</h3>
+            <select id="selCli"><option value="">Seleccionar Cliente</option></select>
+            <input type="text" id="item" placeholder="Producto/Servicio">
+            <input type="number" id="cash" placeholder="Monto $">
+            <select id="status">
+                <option value="Pagado">Pagado</option>
+                <option value="Deuda">Deuda</option>
+            </select>
+            <button class="btn-accion" onclick="addVenta()">REGISTRAR</button>
         </div>
+
+        <div id="sec-deudores" class="seccion">
+            <h3>⚠️ Lista de Deudores</h3>
+            <table id="tabDeuda">
+                <thead><tr><th>Cliente</th><th>Monto</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <p style="color: var(--texto-secundario); font-size: 0.7rem; margin-top: 40px;">Administración de Sistema © 2026</p>
     </div>
 
     <script>
-        let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-        function registrar() {
-            let cliente = document.getElementById('selCliente').value;
-            let monto = document.getElementById('monto').value;
-            let estado = document.getElementById('estado').value;
-            if(estado === 'Deuda') {
-                let tabla = document.getElementById('tablaDeuda');
-                tabla.innerHTML += `<tr><td>${cliente}</td><td>$${monto}</td></tr>`;
-            }
-            alert("Registrado como: " + estado);
+        let db_clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+        
+        function mostrar(id) {
+            document.querySelectorAll('.seccion').forEach(s => s.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            document.getElementById(id).scrollIntoView({behavior: 'smooth'});
         }
-        // Cargar clientes en el select
-        let sel = document.getElementById('selCliente');
-        clientes.forEach(c => sel.innerHTML += `<option value="${c}">${c}</option>`);
+
+        function addCli() {
+            let n = document.getElementById('nomCli').value;
+            if(n) {
+                db_clientes.push(n);
+                localStorage.setItem('clientes', JSON.stringify(db_clientes));
+                actualizarSelect();
+                document.getElementById('nomCli').value = "";
+                alert("Cliente guardado correctamente");
+            }
+        }
+
+        function actualizarSelect() {
+            let s = document.getElementById('selCli');
+            s.innerHTML = '<option value="">Seleccionar Cliente</option>';
+            db_clientes.forEach(c => s.innerHTML += `<option value="${c}">${c}</option>`);
+        }
+
+        function addVenta() {
+            let c = document.getElementById('selCli').value;
+            let m = document.getElementById('cash').value;
+            let st = document.getElementById('status').value;
+            if(c && m) {
+                if(st === 'Deuda') {
+                    let b = document.getElementById('tabDeuda').getElementsByTagName('tbody')[0];
+                    b.innerHTML += `<tr><td>${c}</td><td>$${m}</td></tr>`;
+                }
+                alert("Venta registrada como: " + st);
+                mostrar('sec-deudores'); // Ir a ver la lista si es deuda
+            }
+        }
+        actualizarSelect();
     </script>
 </body>
 </html>
