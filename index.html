@@ -3,46 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SISTEMA GESTIÓN MAX</title>
+    <title>ADMIN DASHBOARD MAX</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --bg-principal: #0f172a;
+            --bg-tarjeta: #1e293b;
+            --texto-titulos: #ffffff;
+            --texto-secundario: #94a3b8;
+            --verde-exito: #10b981;
+            --rojo: #f43f5e;
+            --azul: #3b82f6;
+            --borde: #334155;
+            --accent: #8b5cf6;
+            --naranja: #e07a5f;
+        }
+
         body {
-            background-color: #0b0e14;
-            color: #ffffff;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-principal);
+            color: var(--texto-titulos);
             margin: 0;
             padding: 20px;
             display: flex;
             justify-content: center;
         }
+
         .contenedor {
             width: 100%;
-            max-width: 500px;
-            text-align: center;
+            max-width: 600px;
         }
-        h1 {
-            font-size: 2rem;
-            color: #ffffff;
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 20px;
+        }
+
+        header p {
+            color: var(--azul);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
             margin-bottom: 5px;
         }
-        p.sub {
-            color: #00bfff;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            margin-top: 0;
+
+        h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            font-weight: 900;
+            background: linear-gradient(to bottom, #fff, #64748b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .caja {
-            background: #141a24;
-            border: 1px solid #222f3e;
-            border-radius: 10px;
-            padding: 20px;
+
+        /* Cuadrícula de Botones Principales */
+        .grid-botones {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
             margin-bottom: 20px;
-            text-align: left;
         }
-        .caja h3 {
-            color: #00ffcc;
-            margin-top: 0;
+
+        .btn-cuadrado {
+            background: var(--bg-tarjeta);
+            border: 1px solid var(--borde);
+            border-radius: 16px;
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-cuadrado:active {
+            transform: scale(0.98);
+        }
+
+        .btn-cuadrado i {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .btn-cuadrado span {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Botones Anchos de Lista */
+        .btn-ancho {
+            background: var(--bg-tarjeta);
+            border: 1px solid var(--borde);
+            border-radius: 16px;
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-ancho:active {
+            transform: scale(0.99);
+        }
+
+        .btn-ancho i {
+            font-size: 1.4rem;
+        }
+
+        .btn-ancho span {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* SECCIÓN NUEVA: Control de Expiración */
+        .expiration-container {
+            background: var(--bg-tarjeta);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--borde);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .expiration-header h3 {
+            color: #4a90e2;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .expiration-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        /* Barras de Scroll personalizadas */
+        .expiration-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .expiration-list::-webkit-scrollbar-track {
+            background: var(--bg-principal);
+            border-radius: 10px;
+        }
+        .expiration-list::-webkit-scrollbar-thumb {
+            background: var(--borde);
+            border-radius: 10px;
+        }
+
+        /* Elemento Cliente en la Lista */
+        .cliente-item {
+            background: var(--bg-principal);
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cliente-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 0.95rem;
+            color: #ffffff;
+        }
+
+        .cliente-info p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: var(--texto-secundario);
+        }
+
+        .cliente-status {
+            text-align: right;
+        }
+
+        .badge-dias {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--verde-exito);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .badge-dias.alerta {
+            background: rgba(244, 63, 94, 0.1);
+            color: var(--rojo);
+            border: 1px solid rgba(244, 63, 94, 0.2);
         }
     </style>
 </head>
@@ -50,19 +212,73 @@
 
     <div class="contenedor">
         <header>
-            <p class="sub">Panel de Administración</p>
-            <h1>SISTEMA GESTIÓN MAX</h1>
+            <p>Admin Dashboard</p>
+            <h1>MAX</h1>
         </header>
 
-        <div class="caja">
-            <h3><i class="fas fa-clock"></i> Control de Estados</h3>
-            <p style="color: #a0aec0; margin: 0;">Esperando datos del sistema...</p>
+        <div class="grid-botones">
+            <div class="btn-cuadrado">
+                <i class="fas fa-plus-circle" style="color: #f59e0b;"></i>
+                <span>Venta</span>
+            </div>
+            <div class="btn-cuadrado">
+                <i class="fas fa-user-plus" style="color: #3b82f6;"></i>
+                <span>Clientes</span>
+            </div>
+            <div class="btn-cuadrado">
+                <i class="fas fa-hand-holding-usd" style="color: #f43f5e;"></i>
+                <span>Deudores</span>
+            </div>
+            <div class="btn-cuadrado">
+                <i class="fas fa-wallet" style="color: #10b981;"></i>
+                <span>Balance</span>
+            </div>
         </div>
 
-        <div class="caja">
-            <h3 style="color: #00bfff;"><i class="fas fa-sliders-h"></i> Configuración</h3>
-            <p style="color: #a0aec0; margin: 0;">Panel listo para operar.</p>
+        <div class="btn-ancho">
+            <i class="fas fa-chart-line" style="color: #a78bfa;"></i>
+            <span>Rendimiento Vendedores</span>
         </div>
+
+        <div class="btn-ancho">
+            <i class="fas fa-user-cog" style="color: #94a3b8;"></i>
+            <span>Gestión de Personal</span>
+        </div>
+
+        <div class="btn-ancho">
+            <i class="fas fa-list-ul" style="color: #ffffff;"></i>
+            <span>Historial de Actividad</span>
+        </div>
+
+        <div class="expiration-container">
+            <div class="expiration-header">
+                <h3><i class="fas fa-calendar-alt"></i> Expiración de Clientes</h3>
+            </div>
+            <div class="expiration-list">
+                
+                <div class="cliente-item">
+                    <div class="cliente-info">
+                        <h4>Juan Pérez</h4>
+                        <p>Ingreso: 01/05/2026 | Expira: 31/05/2026</p>
+                    </div>
+                    <div class="cliente-status">
+                        <span class="badge-dias">11 días rest.</span>
+                    </div>
+                </div>
+
+                <div class="cliente-item">
+                    <div class="cliente-info">
+                        <h4>Lucas Gómez</h4>
+                        <p>Ingreso: 22/04/2026 | Expira: 22/05/2026</p>
+                    </div>
+                    <div class="cliente-status">
+                        <span class="badge-dias alerta">2 días rest.</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
 </body>
