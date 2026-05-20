@@ -6,112 +6,43 @@
     <title>SISTEMA GESTIÓN MAX</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --bg-principal: #0b0e14;
-            --bg-tarjeta: #141a24;
-            --texto-titulos: #ffffff;
-            --texto-secundario: #a0aec0;
-            --verde-exito: #00ffcc;
-            --rojo: #ff3366;
-            --azul: #00bfff;
-            --borde: #222f3e;
-            --accent: #8a2be2;
-        }
-
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-principal);
-            color: var(--texto-titulos);
+            background-color: #0b0e14;
+            color: #ffffff;
+            font-family: sans-serif;
             margin: 0;
             padding: 20px;
             display: flex;
             justify-content: center;
         }
-
         .contenedor {
             width: 100%;
-            max-width: 600px;
-        }
-
-        header {
+            max-width: 500px;
             text-align: center;
-            margin-bottom: 30px;
-            padding-top: 20px;
         }
-
-        header p {
-            color: var(--azul);
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-size: 0.75rem;
+        h1 {
+            font-size: 2rem;
+            color: #ffffff;
             margin-bottom: 5px;
         }
-
-        h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            font-weight: 900;
-            background: linear-gradient(to bottom, #ffffff, #a0aec0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
-        }
-
-        /* Sección de Expiración */
-        .expiration-container {
-            background: var(--bg-tarjeta);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border: 1px solid var(--borde);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .expiration-header h3 {
-            color: var(--verde-exito);
-            font-size: 0.95rem;
+        p.sub {
+            color: #00bfff;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 0 0 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .expiration-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 250px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-
-        /* Barras de Scroll personalizadas */
-        .expiration-list::-webkit-scrollbar {
-            width: 4px;
-        }
-        .expiration-list::-webkit-scrollbar-track {
-            background: var(--bg-principal);
-        }
-        .expiration-list::-webkit-scrollbar-thumb {
-            background: var(--borde);
-            border-radius: 2px;
-        }
-
-        .panel-control {
-            background: var(--bg-tarjeta);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid var(--borde);
-        }
-
-        .panel-control h2 {
-            font-size: 1.2rem;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
             margin-top: 0;
+        }
+        .caja {
+            background: #141a24;
+            border: 1px solid #222f3e;
+            border-radius: 10px;
+            padding: 20px;
             margin-bottom: 20px;
-            color: var(--azul);
+            text-align: left;
+        }
+        .caja h3 {
+            color: #00ffcc;
+            margin-top: 0;
         }
     </style>
 </head>
@@ -119,21 +50,19 @@
 
     <div class="contenedor">
         <header>
-            <p>Panel de Administración</p>
+            <p class="sub">Panel de Administración</p>
             <h1>SISTEMA GESTIÓN MAX</h1>
         </header>
 
-        <div class="expiration-container">
-            <div class="expiration-header">
-                <h3><i class="fas fa-clock"></i> Control de Estados</h3>
-            </div>
-            <div class="expiration-list">
-                </div>
+        <div class="caja">
+            <h3><i class="fas fa-clock"></i> Control de Estados</h3>
+            <p style="color: #a0aec0; margin: 0;">Esperando datos del sistema...</p>
         </div>
 
-        <div class="panel-control">
-            <h2><i class="fas fa-sliders-h"></i> Opciones de Configuración</h2>
-            </div>
+        <div class="caja">
+            <h3 style="color: #00bfff;"><i class="fas fa-sliders-h"></i> Configuración</h3>
+            <p style="color: #a0aec0; margin: 0;">Panel listo para operar.</p>
+        </div>
     </div>
 
 </body>
