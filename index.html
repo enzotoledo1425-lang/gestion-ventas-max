@@ -38,15 +38,6 @@
             padding-top: 20px;
         }
 
-        header p {
-            color: var(--azul);
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            margin-bottom: 5px;
-        }
-
         h1 {
             font-size: 3.5rem;
             margin: 0;
@@ -96,18 +87,10 @@
             gap: 15px;
         }
 
-        .btn-ancho i {
-            font-size: 1.4rem;
-        }
+        .btn-ancho i { font-size: 1.4rem; }
+        .btn-ancho span { font-weight: 600; font-size: 0.9rem; text-transform: uppercase; }
 
-        .btn-ancho span {
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* APARTADO: Control de Vencimientos Funcional */
+        /* Apartado de Vencimientos */
         .apartado-clientes {
             background: var(--bg-tarjeta);
             border: 1px solid var(--borde);
@@ -122,29 +105,41 @@
             margin-top: 0;
             margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: 1px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        /* Formulario para ingresar datos */
+        /* Formulario Optimizado */
         .form-ingreso {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
             border-bottom: 1px solid var(--borde);
+        }
+
+        .campo-grupo {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .campo-grupo label {
+            font-size: 0.75rem;
+            color: var(--texto-secundario);
+            text-transform: uppercase;
+            font-weight: bold;
         }
 
         .form-ingreso input {
             background: var(--bg-principal);
             border: 1px solid var(--borde);
             color: #fff;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 1rem;
             outline: none;
         }
 
@@ -152,19 +147,18 @@
             background: var(--azul);
             color: #fff;
             border: none;
-            padding: 12px;
+            padding: 14px;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             text-transform: uppercase;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            margin-top: 5px;
         }
 
-        .form-ingreso button:active {
-            transform: scale(0.98);
-        }
+        .form-ingreso button:active { transform: scale(0.98); }
 
-        /* Tabla de Clientes */
+        /* Tabla */
         .tabla-clientes {
             width: 100%;
             border-collapse: collapse;
@@ -188,53 +182,129 @@
         .col-cliente { font-weight: 600; color: #fff; }
         .col-fecha { color: var(--texto-secundario); }
         .col-expira { color: var(--verde-exito); font-weight: bold; }
+        
+        .btn-borrar {
+            background: transparent;
+            border: none;
+            color: var(--rojo);
+            cursor: pointer;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
 
     <div class="contenedor">
         <header>
-            <p>Admin Dashboard</p>
+            <h1 style="font-size: 1rem; color: #3b82f6; font-weight: 700; margin-bottom: 5px; text-align: center; letter-spacing: 2px;">ADMIN DASHBOARD</h1>
             <h1>MAX</h1>
         </header>
 
         <div class="grid-botones">
-            <div class="btn-cuadrado">
-                <i class="fas fa-plus-circle" style="color: #f59e0b;"></i>
-                <span>Venta</span>
-            </div>
-            <div class="btn-cuadrado">
-                <i class="fas fa-user-plus" style="color: #3b82f6;"></i>
-                <span>Clientes</span>
-            </div>
-            <div class="btn-cuadrado">
-                <i class="fas fa-hand-holding-usd" style="color: #f43f5e;"></i>
-                <span>Deudores</span>
-            </div>
-            <div class="btn-cuadrado">
-                <i class="fas fa-wallet" style="color: #10b981;"></i>
-                <span>Balance</span>
-            </div>
+            <div class="btn-cuadrado"><i class="fas fa-plus-circle" style="color: #f59e0b;"></i><span>Venta</span></div>
+            <div class="btn-cuadrado"><i class="fas fa-user-plus" style="color: #3b82f6;"></i><span>Clientes</span></div>
+            <div class="btn-cuadrado"><i class="fas fa-hand-holding-usd" style="color: #f43f5e;"></i><span>Deudores</span></div>
+            <div class="btn-cuadrado"><i class="fas fa-wallet" style="color: #10b981;"></i><span>Balance</span></div>
         </div>
 
-        <div class="btn-ancho">
-            <i class="fas fa-chart-line" style="color: #a78bfa;"></i>
-            <span>Rendimiento Vendedores</span>
-        </div>
-
-        <div class="btn-ancho">
-            <i class="fas fa-user-cog" style="color: #94a3b8;"></i>
-            <span>Gestión de Personal</span>
-        </div>
-
-        <div class="btn-ancho">
-            <i class="fas fa-list-ul" style="color: #ffffff;"></i>
-            <span>Historial de Actividad</span>
-        </div>
+        <div class="btn-ancho"><i class="fas fa-chart-line" style="color: #a78bfa;"></i><span>Rendimiento Vendedores</span></div>
+        <div class="btn-ancho"><i class="fas fa-user-cog" style="color: #94a3b8;"></i><span>Gestión de Personal</span></div>
+        <div class="btn-ancho"><i class="fas fa-list-ul" style="color: #ffffff;"></i><span>Historial de Actividad</span></div>
 
         <div class="apartado-clientes">
             <h2><i class="fas fa-users-cog"></i> Control de Vencimientos</h2>
             
             <div class="form-ingreso">
-                <input type="text" id="nombreCliente" placeholder="Nombre del Cliente">
-                <input type="text" id="fechaIngreso" placeholder="F. Ingreso (ej: 10/0
+                <div class="campo-grupo">
+                    <label>Nombre Cliente</label>
+                    <input type="text" id="nombreCliente" placeholder="Ej: Carlos Rodriguez">
+                </div>
+                <div class="campo-grupo">
+                    <label>Fecha de Ingreso</label>
+                    <input type="date" id="fechaIngreso">
+                </div>
+                <div class="campo-grupo">
+                    <label>Fecha de Expiración</label>
+                    <input type="date" id="fechaExpiracion">
+                </div>
+                <button onclick="agregarCliente()">Guardar Cliente</button>
+            </div>
+
+            <table class="tabla-clientes">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>F. Ingreso</th>
+                        <th>F. Expiración</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="listaClientes">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Cargar clientes guardados al abrir la página
+        document.addEventListener('DOMContentLoaded', cargarClientes);
+
+        function agregarCliente() {
+            var nombre = document.getElementById('nombreCliente').value;
+            var ingresoRaw = document.getElementById('fechaIngreso').value;
+            var expiraRaw = document.getElementById('fechaExpiracion').value;
+
+            if(nombre === "" || ingresoRaw === "" || expiraRaw === "") {
+                alert("Por favor, completá todos los campos.");
+                return;
+            }
+
+            // Cambiar formato YYYY-MM-DD a DD/MM/YYYY para que quede lindo
+            var ingreso = ingresoRaw.split('-').reverse().join('/');
+            var expira = expiraRaw.split('-').reverse().join('/');
+
+            var cliente = { nombre: nombre, ingreso: ingreso, expira: expira };
+
+            // Guardar en LocalStorage
+            var clientes = localStorage.getItem('clientesMax') ? JSON.parse(localStorage.getItem('clientesMax')) : [];
+            clientes.push(cliente);
+            localStorage.setItem('clientesMax', JSON.stringify(clientes));
+
+            dibujarTabla();
+
+            // Limpiar inputs
+            document.getElementById('nombreCliente').value = "";
+            document.getElementById('fechaIngreso').value = "";
+            document.getElementById('fechaExpiracion').value = "";
+        }
+
+        function cargarClientes() {
+            dibujarTabla();
+        }
+
+        function dibujarTabla() {
+            var tabla = document.getElementById('listaClientes');
+            tabla.innerHTML = "";
+            var clientes = localStorage.getItem('clientesMax') ? JSON.parse(localStorage.getItem('clientesMax')) : [];
+
+            clientes.forEach(function(c, index) {
+                var fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td class="col-cliente">${c.nombre}</td>
+                    <td class="col-fecha">${c.ingreso}</td>
+                    <td class="col-expira">${c.expira}</td>
+                    <td><button class="btn-borrar" onclick="eliminarCliente(${index})"><i class="fas fa-trash"></i></button></td>
+                `;
+                tabla.appendChild(fila);
+            });
+        }
+
+        function eliminarCliente(index) {
+            var clientes = JSON.parse(localStorage.getItem('clientesMax'));
+            clientes.splice(index, 1);
+            localStorage.setItem('clientesMax', JSON.stringify(clientes));
+            dibujarTabla();
+        }
+    </script>
+</body>
+</html>
