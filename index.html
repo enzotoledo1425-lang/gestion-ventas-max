@@ -3,154 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADMIN DASHBOARD MAX</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>MAX Admin Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-principal: #0f172a;
-            --bg-tarjeta: #1e293b;
-            --texto-titulos: #ffffff;
-            --texto-secundario: #94a3b8;
-            --verde-exito: #10b981;
-            --rojo: #f43f5e;
-            --azul: #3b82f6;
-            --borde: #334155;
-        }
-
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-principal);
-            color: var(--texto-titulos);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
+            background-color: #0d1424; /* Azul oscuro de fondo */
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
-
-        .contenedor {
-            width: 100%;
-            max-width: 600px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-top: 20px;
-        }
-
-        header p {
-            color: var(--azul);
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            margin-bottom: 5px;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            margin: 0;
-            font-weight: 900;
-            background: linear-gradient(to bottom, #fff, #64748b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
-        }
-
-        /* Cuadrícula de Botones Principales */
-        .grid-botones {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .btn-cuadrado {
-            background: var(--bg-tarjeta);
-            border: 1px solid var(--borde);
-            border-radius: 16px;
-            padding: 25px 15px;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .btn-cuadrado i {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .btn-cuadrado span {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        /* Botones Anchos de Lista */
-        .btn-ancho {
-            background: var(--bg-tarjeta);
-            border: 1px solid var(--borde);
-            border-radius: 16px;
-            padding: 18px 20px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-        }
-
-        .btn-ancho i {
-            font-size: 1.4rem;
-        }
-
-        .btn-ancho span {
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .bg-card {
+            background-color: #1a2333; /* Fondo de las tarjetas y botones */
         }
     </style>
 </head>
-<body>
+<body class="text-gray-200 min-h-screen p-4 flex flex-col justify-between select-none">
 
-    <div class="contenedor">
-        <header>
-            <p>Admin Dashboard</p>
-            <h1>MAX</h1>
-        </header>
+    <div class="w-full max-w-md mx-auto space-y-6">
+        
+        <div class="text-center mt-4">
+            <h2 class="text-xs font-semibold tracking-widest text-blue-400 uppercase">Admin Dashboard</h2>
+            <h1 class="text-5xl font-black tracking-wider text-gray-300 mt-1">MAX</h1>
+        </div>
 
-        <div class="grid-botones">
-            <div class="btn-cuadrado">
-                <i class="fas fa-plus-circle" style="color: #f59e0b;"></i>
-                <span>Venta</span>
+        <div class="grid grid-cols-2 gap-4">
+            <button class="bg-card active:scale-95 transition-transform p-5 rounded-2xl flex flex-col items-center justify-center gap-2 border border-slate-800/50 shadow-lg">
+                <div class="w-12 h-12 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-500 text-xl">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <span class="font-medium text-sm text-gray-300">Venta</span>
+            </button>
+
+            <button class="bg-card active:scale-95 transition-transform p-5 rounded-2xl flex flex-col items-center justify-center gap-2 border border-slate-800/50 shadow-lg">
+                <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 text-xl">
+                    <i class="fa-solid fa-user-plus"></i>
+                </div>
+                <span class="font-medium text-sm text-gray-300">Clientes</span>
+            </button>
+
+            <button class="bg-card active:scale-95 transition-transform p-5 rounded-2xl flex flex-col items-center justify-center gap-2 border border-slate-800/50 shadow-lg">
+                <div class="w-12 h-12 rounded-full bg-rose-500/10 flex items-center justify-center text-rose-400 text-xl">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                </div>
+                <span class="font-medium text-sm text-gray-300">Deudores</span>
+            </button>
+
+            <button class="bg-card active:scale-95 transition-transform p-5 rounded-2xl flex flex-col items-center justify-center gap-2 border border-slate-800/50 shadow-lg">
+                <div class="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-xl">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+                <span class="font-medium text-sm text-gray-300">Balance</span>
+            </button>
+        </div>
+
+        <div class="space-y-3">
+            <button class="w-full bg-card active:scale-98 transition-transform px-4 py-4 rounded-xl flex items-center gap-4 border border-slate-800/40 shadow-md text-left">
+                <i class="fa-solid fa-chart-line text-purple-400 text-lg w-6 text-center"></i>
+                <span class="text-xs font-bold tracking-wider uppercase text-gray-300">Rendimiento Vendedores</span>
+            </button>
+
+            <button class="w-full bg-card active:scale-98 transition-transform px-4 py-4 rounded-xl flex items-center gap-4 border border-slate-800/40 shadow-md text-left">
+                <i class="fa-solid fa-users-gear text-slate-400 text-lg w-6 text-center"></i>
+                <span class="text-xs font-bold tracking-wider uppercase text-gray-300">Gestión de Personal</span>
+            </button>
+
+            <button class="w-full bg-card active:scale-98 transition-transform px-4 py-4 rounded-xl flex items-center gap-4 border border-slate-800/40 shadow-md text-left">
+                <i class="fa-solid fa-list-ul text-slate-400 text-lg w-6 text-center"></i>
+                <span class="text-xs font-bold tracking-wider uppercase text-gray-300">Historial de Actividad</span>
+            </button>
+        </div>
+
+        <div class="bg-card rounded-2xl p-4 border border-slate-800/60 shadow-xl space-y-4">
+            <div class="flex items-center gap-3 text-blue-500">
+                <i class="fa-solid fa-users text-lg"></i>
+                <h3 class="text-sm font-bold tracking-wider uppercase">Control de Vencimientos</h3>
             </div>
-            <div class="btn-cuadrado">
-                <i class="fas fa-user-plus" style="color: #3b82f6;"></i>
-                <span>Clientes</span>
-            </div>
-            <div class="btn-cuadrado">
-                <i class="fas fa-hand-holding-usd" style="color: #f43f5e;"></i>
-                <span>Deudores</span>
-            </div>
-            <div class="btn-cuadrado">
-                <i class="fas fa-wallet" style="color: #10b981;"></i>
-                <span>Balance</span>
+
+            <div class="w-full text-left text-xs">
+                <div class="grid grid-cols-3 text-slate-500 font-bold tracking-wider mb-2 px-1">
+                    <div>CLIENTE</div>
+                    <div class="text-center">F. INGRESO</div>
+                    <div class="text-right">F. EXPIRACIÓN</div>
+                </div>
+                <div class="h-px bg-slate-800 my-2"></div>
+                <div class="grid grid-cols-3 items-center font-medium px-1 py-1 text-gray-300">
+                    <div class="truncate font-semibold text-sm">Carlos Rodriguez</div>
+                    <div class="text-center text-slate-400">10/05/2026</div>
+                    <div class="text-right text-emerald-400 font-semibold">10/06/2026</div>
+                </div>
             </div>
         </div>
 
-        <div class="btn-ancho">
-            <i class="fas fa-chart-line" style="color: #a78bfa;"></i>
-            <span>Rendimiento Vendedores</span>
-        </div>
-
-        <div class="btn-ancho">
-            <i class="fas fa-user-cog" style="color: #94a3b8;"></i>
-            <span>Gestión de Personal</span>
-        </div>
-
-        <div class="btn-ancho">
-            <i class="fas fa-list-ul" style="color: #ffffff;"></i>
-            <span>Historial de Actividad</span>
-        </div>
     </div>
 
 </body>
